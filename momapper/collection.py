@@ -23,3 +23,9 @@ class DecoratedCollection:
         if _skip_validation:
             return _cursor
         return DecoratedCursor(_cursor, self.__impl)
+
+    def find_one(self, *args, _skip_validation=False, **kwargs):
+        document = self.__collection.find_one(*args, **kwargs)
+        if _skip_validation:
+            return document
+        return self.__impl(_document=document) if document else None

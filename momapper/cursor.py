@@ -1,20 +1,12 @@
-class DecoratedCursor:
-    def __init__(self, cursor, impl):
-        self.__cursor = cursor
-        self.__impl = impl
+from pymongo.cursor import Cursor
 
-    def __getattr__(self, attr):
-        return getattr(self.__cursor, attr)
+
+class DecoratedCursor(Cursor):
+    def _map_document(self, document):
+        return self.collection._impl(_document=document) if document else None
 
     def next(self):
-        document = self.__cursor.next()
-        return self.__impl(_document=document) if document else None
-
-    def __getitem__(self, index):
-        result = self.__cursor[index]
-        if isinstance(index, int):
-            return self.__impl(_document=result) if result else None
-        return result
+        return self._map_document(super().next())
 
     __next__ = next
 

@@ -32,7 +32,9 @@ def mongo_client():
 def register_documents(monkeypatch, mongo_client):
     with monkeypatch.context() as m:
         m.setattr(MongoManager, "_registry", {})
-        MongoManager.register(Document, mongo_client.documents)
+        MongoManager.register(
+            Document, database=mongo_client, collection_name="documents"
+        )
         yield
 
 

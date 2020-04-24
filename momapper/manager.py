@@ -5,8 +5,10 @@ class MongoManager:
     _registry = {}
 
     @classmethod
-    def register(cls, _class, collection):
-        cls._registry[_class] = DecoratedCollection(collection=collection, impl=_class)
+    def register(cls, _class, database, collection_name, **collection_options):
+        cls._registry[_class] = DecoratedCollection(
+            database=database, name=collection_name, impl=_class, **collection_options
+        )
 
     @classmethod
     def get_collection(cls, _class):

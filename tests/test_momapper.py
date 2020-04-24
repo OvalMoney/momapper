@@ -13,7 +13,7 @@ from pymongo import MongoClient
 
 
 class Document(MappedClass):
-    uid = Field("_id", ObjectId, if_missing=ObjectId)
+    uid = Field("_id", ObjectId, if_missing=ObjectId, required=True)
     name = Field("name", str)
     money = Field("amount_of_money", int)
 

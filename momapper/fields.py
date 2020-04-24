@@ -30,20 +30,17 @@ class Field:
             return value.to_decimal()
         return value
 
+    def get_missing(self):
+        return self.if_missing() if callable(self.if_missing) else self.if_missing
+
     def extract(self, document):
-        value = Field.decode_from_mongo(document.get(self.field, NoValue))
-        if value is NoValue:
-            if not self.required:
-                document[self.field] = (
-                    self.if_missing() if callable(self.if_missing) else self.if_missing
-                )
-                return document[self.field]
-            raise ValueError(f"missing value {self.field}")
-        return value
+        return Field.decode_from_mongo(document.get(self.field, NoValue))
 
     def validate(self, value):
         if value in (None, NoValue):
             if self.required:
+                if self.if_missing:
+                    return self.get_missing()
                 raise ValueError(
                     f"{self.field} is required. " f"Found {value}({type(value)}"
                 )

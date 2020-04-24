@@ -17,18 +17,24 @@ class ValidatorMeta(type):
 
 class MappedClass(metaclass=ValidatorMeta):
     __collection_name__ = None
-    __fields__ = []
+    __fields__ = {}
 
-    def __init__(self, _document=None, *args, **kwargs):
-        self._document = _document or {}
+    def __init__(self, _document=None, **kwargs):
+        if not _document:
+            _document = self.make_document(**kwargs)
+        self._document = self.validate(_document)
+
+    @classmethod
+    def make_document(cls, **kwargs):
+        _document = {}
         for field, value in kwargs.items():
-            setattr(self, field, value)
-        self._validate_document()
-
-    def _validate_document(self):
-        for attrname in self.__fields__:
-            getattr(self, attrname)
+            _document[cls.__fields__[field]] = value
+        return _document
 
     @classmethod
     def validate(cls, document):
-        return cls(_document=document)
+        _validated = {}
+        for attrname, doc_attrname in cls.__fields__.items():
+            _field = getattr(cls, attrname)
+            _validated[doc_attrname] = _field.validate(document.get(doc_attrname))
+        return _validated

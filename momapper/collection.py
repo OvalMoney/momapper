@@ -12,7 +12,7 @@ class DecoratedCollection(Collection):
         if isinstance(document, self._impl):
             document = document._document
         elif not _skip_validation:
-            document = self._impl.validate(document)._document
+            document = self._impl.validate(document)
         result = super().insert_one(document, *args, **kwargs)
         document["_id"] = result.inserted_id
         return result

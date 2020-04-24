@@ -39,10 +39,10 @@ class Field:
     def validate(self, value):
         if value in (None, NoValue):
             if self.required:
-                if self.if_missing:
+                if self.if_missing is not NoValue:
                     return self.get_missing()
                 raise ValueError(
-                    f"{self.field} is required. " f"Found {value}({type(value)}"
+                    f"{self.field} is required. Found {value}({type(value)}"
                 )
             return None
         if not isinstance(value, self.type_):

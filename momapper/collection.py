@@ -18,7 +18,6 @@ class DecoratedCollection(Collection):
         return result
 
     def find(self, *args, _skip_validation=False, **kwargs):
-        _cursor = super().find(*args, **kwargs)
         if _skip_validation:
-            return _cursor
+            return super().find(*args, **kwargs)
         return DecoratedCursor(self, *args, **kwargs)

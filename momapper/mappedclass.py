@@ -16,7 +16,6 @@ class ValidatorMeta(type):
 
 
 class MappedClass(metaclass=ValidatorMeta):
-    __collection_name__ = None
     __fields__ = {}
 
     def __init__(self, _document=None, **kwargs):

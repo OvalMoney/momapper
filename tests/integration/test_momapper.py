@@ -4,12 +4,11 @@
 """Tests for `momapper` package."""
 
 import pytest
-from pymongo.results import InsertOneResult
+from pymongo.results import InsertOneResult, UpdateResult
 
 from momapper import collection, MongoManager, MappedClass, Field
 
 from bson import ObjectId
-from pymongo import MongoClient
 
 
 class Document(MappedClass):
@@ -21,19 +20,12 @@ class Document(MappedClass):
         return f"<Document {self.__dict__}>"
 
 
-@pytest.fixture(scope="session")
-def mongo_client():
-    client = MongoClient()
-    db = client.get_database("testing")
-    return db
-
-
 @pytest.fixture
 def register_documents(monkeypatch, mongo_client):
     with monkeypatch.context() as m:
         m.setattr(MongoManager, "_registry", {})
         MongoManager.register(
-            Document, database=mongo_client, collection_name="documents"
+            Document, database=mongo_client.db, collection_name=mongo_client.collection
         )
         yield
 
@@ -119,3 +111,28 @@ def test_find_one_skip_validation(register_documents):
     result = collection(Document).find_one({"_id": _id}, _skip_validation=True)
     assert isinstance(result, dict)
     assert result == {"_id": _id, "invalid": "doc"}
+
+
+def test_update_one(document):
+    assert document.name != "Jake"
+    collection(Document).insert_one(document)
+    result = collection(Document).update_one(
+        {"_id": document.uid}, {"$set": {"name": "Jake"}}
+    )
+    assert isinstance(result, UpdateResult)
+    assert result.matched_count == 1
+    assert result.modified_count == 1
+    assert result.upserted_id is None
+
+
+def test_upsert_one(document):
+    assert document.name != "Jake"
+    result = collection(Document).update_one(
+        {"_id": document.uid}, {"$set": {"name": "Jake"}}, upsert=True
+    )
+    assert isinstance(result, UpdateResult)
+    assert result.matched_count == 0
+    assert result.modified_count == 0
+    assert result.upserted_id is not None
+    document = collection(Document).find_one({"_id": result.upserted_id})
+    assert document.name == "Jake"

@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 from pymongo.cursor import Cursor
 
-from momapper.cursor import DecoratedCursor
+from momapper.decorated_cursor import DecoratedCursor
 
 
 def test_decorated_cursor_next(mongo_client, monkeypatch):

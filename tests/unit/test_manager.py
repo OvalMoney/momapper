@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 from momapper import MongoManager, collection
-from momapper.collection import DecoratedCollection
+from momapper.decorated_collection import DecoratedCollection
 
 
 def test_manager_register(mongo_client, monkeypatch):

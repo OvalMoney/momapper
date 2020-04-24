@@ -5,8 +5,8 @@ from bson import ObjectId
 from pymongo.collection import Collection
 from pymongo.results import InsertOneResult
 
-from momapper.collection import DecoratedCollection
-from momapper.cursor import DecoratedCursor
+from momapper.decorated_collection import DecoratedCollection
+from momapper.decorated_cursor import DecoratedCursor
 from tests.unit.conftest import Cop
 
 

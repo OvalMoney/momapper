@@ -1,7 +1,7 @@
 import pytest
 
 from momapper import Field
-from momapper.mappedclass import ValidatorMeta, MappedClass
+from momapper.mappedclass import ValidatorMeta
 from tests.unit.conftest import Cop
 
 

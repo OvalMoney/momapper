@@ -1,4 +1,4 @@
-from momapper.collection import DecoratedCollection
+from momapper.decorated_collection import DecoratedCollection
 
 
 class MongoManager:

@@ -4,7 +4,7 @@ from .cursor import MappedCursor
 
 
 class MappedCollection(Collection):
-    """Decorated collection that generates decorated cursors.
+    """Collection implementation generating cursors that map their results to mapped objects.
 
     Subclass of :py:class:`pymongo.collection.Collection` that maps results
     to instances of a mapped class instead of plain dictionaries.

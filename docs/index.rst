@@ -1,5 +1,5 @@
 Welcome to MoMapper (Mongo Mapper)'s documentation!
-======================================
+===================================================
 
 .. toctree::
    :maxdepth: 2

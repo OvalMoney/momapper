@@ -14,7 +14,7 @@ NoValue = NoValueType()  # marker
 class Field:
     """Field class to use for schema declaration.
 
-    All the attributes of a :py:class:`MappedClass` that are instances of
+    All the attributes of a :py:class:`momapper.MappedClass` that are instances of
     :py:class:`Field` are used for schema validation.
     """
 
@@ -55,9 +55,11 @@ class Field:
 
         Validation is performed by running the complete pipeline of validation
         on the ``BaseType`` instance:
-            1. ``BaseType.unmarshal()`` to unmarshal a value that possibly comes from raw data.
-            2. ``BaseType.validate()`` to validate the unmarshalled value.
-            3. ``BaseType.marshal()`` to marshal the value again in the right format.
+
+          1. ``BaseType.unmarshal()`` to unmarshal a value that possibly comes from raw data.
+          2. ``BaseType.validate()`` to validate the unmarshalled value.
+          3. ``BaseType.marshal()`` to marshal the value again in the right format.
+
         The validated value is then returned.
 
         If the value is not found and it was required, the return value of ``if_missing``
@@ -87,7 +89,7 @@ class Field:
         """Override getter of field to validate outgoing values.
 
         The value of the field is taken from the ``_document`` property
-        of the ``MappedClass`` instance, and validated after performing
+        of the ``momapper.MappedClass`` instance, and validated after performing
         unmarshalling.
         """
         if instance is None:
@@ -102,7 +104,7 @@ class Field:
         """Override getter of field to validate ingoing values.
 
         The value of the field is set onto the ``_document`` property
-        of the ``MappedClass`` instance, validated and marshalled.
+        of the ``momapper.MappedClass`` instance, validated and marshalled.
         """
         validator = self.validator(value)
         validator.validate()

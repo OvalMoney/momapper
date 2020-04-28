@@ -9,6 +9,13 @@ Python Mapper for MongoDB models
         :target: https://pypi.python.org/pypi/momapper
 
 
+Features
+--------
+
+* Schema validation for documents.
+* Type validation for document fields.
+* 100% compatible with Pymongo API.
+* Implements Mapper_ design pattern, separating schema and type validation from storage logic.
 
 Installation:
 -------------
@@ -17,13 +24,10 @@ Installation:
 
     $ pip install momapper
 
-Features
---------
+Usage:
+------
 
-* Schema validation for documents.
-* Type validation for document fields.
-* 100% compatible with Pymongo API.
-* Implements Mapper_ design pattern, separating schema and type validation from storage logic.
+Check it out in the doc_.
 
 License
 -------
@@ -39,3 +43,4 @@ This package was created with Cookiecutter_ and the `wboxx1/cookiecutter-pypacka
 .. _`wboxx1/cookiecutter-pypackage`: https://github.com/wboxx1/cookiecutter-pypackage-poetry
 .. _MIT: ./LICENSE
 .. _Mapper: https://en.wikipedia.org/wiki/Data_mapper_pattern
+.. _doc: ./docs/usage.rst

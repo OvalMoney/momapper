@@ -4,8 +4,8 @@ from .collection import MappedCollection
 class MongoManager:
     """Manager of MongoDB datastore.
 
-    Gives access to MongoDB storage for registered ``MappedClass``,
-    by creating and storing ``MappedCollection`` instances in the registry.
+    Gives access to MongoDB storage for registered ``momapper.MappedClass``,
+    by creating and storing ``momapper.MappedCollection`` instances in the registry.
     """
 
     _registry = {}
@@ -15,7 +15,7 @@ class MongoManager:
         """Register a MappedClass on MongoDB datastore.
 
         :param _class: the class to register.
-        :type _class: Type[MappedClass]
+        :type _class: Type[momapper.MappedClass]
         :param database: the database object from pymongo.
         :type database: pymongo.database.Database
         :param collection_name: the collection name for the mapped class.
@@ -32,7 +32,7 @@ class MongoManager:
         """Retrieve the mapped collection from the registry.
 
         :param _class: the registered mapped class.
-        :type _class: Type[MappedClass]
+        :type _class: Type[momapper.MappedClass]
         :return: the mapped collection for the registered class.
         :rtype: MappedCollection
         """
@@ -43,7 +43,7 @@ def collection(mappedclass):
     """Helper to simplify access to MongoDB datastore.
 
     :param mappedclass: the registered mapped class.
-    :type mappedclass: Type[MappedClass]
+    :type mappedclass: Type[momapper.MappedClass]
     :return: the mapped collection for the registered class.
     :rtype: MappedCollection
     """

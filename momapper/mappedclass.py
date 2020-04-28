@@ -44,8 +44,8 @@ class MappedClass(metaclass=ValidatorMeta):
 
         :param _document: a document already built.
         :type _document: dict
-        :param **kwargs: the keyword arguments used to build a document.
-        :type **kwargs: dict
+        :param kwargs: the keyword arguments used to build a document.
+        :type kwargs: dict
         """
         if not _document:
             _document = self.make_document(**kwargs)
@@ -58,8 +58,8 @@ class MappedClass(metaclass=ValidatorMeta):
         It's as easy as building a dictionary from keywords, but with the
         keys mapped according to the schema declared by the class.
 
-        :param **kwargs: the keyword arguments used to build the document.
-        :type **kwargs: dict
+        :param kwargs: the keyword arguments used to build the document.
+        :type kwargs: dict
         """
         _document = {}
         for field, value in kwargs.items():

@@ -8,6 +8,8 @@ __all__ = [
     "BoolType",
     "ListType",
     "DictType",
+    "ValidationError",
+    "Missing"
 ]
 
 from decimal import Decimal

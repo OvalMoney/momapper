@@ -2,7 +2,7 @@ import pytest
 
 from momapper import Field
 from momapper.mappedclass import ValidatorMeta
-from momapper.types import StringType, IntType
+from momapper.types import StringType, IntType, ValidationError
 from tests.unit.conftest import Cop
 
 
@@ -85,7 +85,7 @@ def test_mappedclass_validate(document, validated):
 
 
 def test_mappedclass_validate_invalid():
-    with pytest.raises(TypeError):
+    with pytest.raises(ValidationError):
         Cop.validate(
             {"the_name": "Jake", "the_surname": "Peralta", "skill_level": "genius"}
         )

@@ -1,24 +1,15 @@
 momapper package
 ================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    momapper.mongodb
+
 Submodules
 ----------
-
-momapper.decorated\_collection module
--------------------------------------
-
-.. automodule:: momapper.decorated_collection
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-momapper.decorated\_cursor module
----------------------------------
-
-.. automodule:: momapper.decorated_cursor
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
 momapper.fields module
 ----------------------
@@ -28,18 +19,18 @@ momapper.fields module
     :undoc-members:
     :show-inheritance:
 
-momapper.manager module
------------------------
-
-.. automodule:: momapper.manager
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 momapper.mappedclass module
 ---------------------------
 
 .. automodule:: momapper.mappedclass
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+momapper.types module
+---------------------
+
+.. automodule:: momapper.types
     :members:
     :undoc-members:
     :show-inheritance:

@@ -5,8 +5,8 @@ from bson import ObjectId
 from pymongo.collection import Collection
 from pymongo.results import InsertOneResult
 
-from momapper.decorated_collection import DecoratedCollection
-from momapper.decorated_cursor import DecoratedCursor
+from momapper.mongodb.collection import MappedCollection
+from momapper.mongodb.cursor import MappedCursor
 from tests.unit.conftest import Cop
 
 
@@ -19,7 +19,7 @@ def insert_mock(monkeypatch):
 
 
 def test_decorated_collection_insert_one_instance(mongo_client, insert_mock):
-    collection = DecoratedCollection(mongo_client.db, mongo_client.collection, impl=Cop)
+    collection = MappedCollection(mongo_client.db, mongo_client.collection, impl=Cop)
     document = {"the_name": "Ray", "the_surname": "Holt", "skill_level": 10}
     obj = Cop()
     obj._document = document
@@ -31,7 +31,7 @@ def test_decorated_collection_insert_one_instance(mongo_client, insert_mock):
 def test_decorated_collection_insert_one_document(
     monkeypatch, mongo_client, insert_mock
 ):
-    collection = DecoratedCollection(mongo_client.db, mongo_client.collection, impl=Cop)
+    collection = MappedCollection(mongo_client.db, mongo_client.collection, impl=Cop)
     document = {"the_name": "Ray", "the_surname": "Holt", "skill_level": 10}
     monkeypatch.setattr(collection._impl, "validate", MagicMock(return_value=document))
     assert isinstance(collection.insert_one(document), InsertOneResult)
@@ -43,7 +43,7 @@ def test_decorated_collection_insert_one_document(
 def test_decorated_collection_insert_one_skip_validation(
     monkeypatch, mongo_client, insert_mock
 ):
-    collection = DecoratedCollection(mongo_client.db, mongo_client.collection, impl=Cop)
+    collection = MappedCollection(mongo_client.db, mongo_client.collection, impl=Cop)
     document = {"the_name": "Ray", "the_surname": "Holt", "skill_level": 10}
     monkeypatch.setattr(collection._impl, "validate", MagicMock())
     assert isinstance(collection.insert_one(document, _skip_validation=True), InsertOneResult)
@@ -53,11 +53,11 @@ def test_decorated_collection_insert_one_skip_validation(
 
 
 def test_decorated_collection_find(mongo_client, monkeypatch):
-    collection = DecoratedCollection(
+    collection = MappedCollection(
         mongo_client.db, mongo_client.collection, impl=None
     )
     result = collection.find({"query": "value"})
-    assert isinstance(result, DecoratedCursor)
+    assert isinstance(result, MappedCursor)
     assert result.collection is collection
     assert result.__dict__["_Cursor__spec"] == {"query": "value"}
 
@@ -66,7 +66,7 @@ def test_decorated_collection_find_skip_validation(mongo_client, monkeypatch):
     with monkeypatch.context() as m:
         _result = object()
         m.setattr(Collection, "find", MagicMock(return_value=_result))
-        collection = DecoratedCollection(
+        collection = MappedCollection(
             mongo_client.db, mongo_client.collection, impl=None
         )
         assert collection.find({"query": "value"}, _skip_validation=True) is _result

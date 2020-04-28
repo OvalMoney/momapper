@@ -1,7 +1,7 @@
 from pymongo.cursor import Cursor
 
 
-class DecoratedCursor(Cursor):
+class MappedCursor(Cursor):
     def _map_document(self, document):
         return self.collection._impl(_document=document) if document else None
 

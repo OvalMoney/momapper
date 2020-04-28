@@ -1,4 +1,4 @@
-from momapper.decorated_collection import DecoratedCollection
+from .collection import MappedCollection
 
 
 class MongoManager:
@@ -6,7 +6,7 @@ class MongoManager:
 
     @classmethod
     def register(cls, _class, database, collection_name, **collection_options):
-        cls._registry[_class] = DecoratedCollection(
+        cls._registry[_class] = MappedCollection(
             database=database, name=collection_name, impl=_class, **collection_options
         )
 

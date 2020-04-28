@@ -9,6 +9,6 @@ __version__ = "0.0.1"
 
 from .fields import Field
 from .mappedclass import MappedClass
-from .manager import MongoManager, collection
+from .mongodb.manager import MongoManager, collection
 
 __all__ = ["Field", "MappedClass", "MongoManager", "collection"]

@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 from momapper import MongoManager, collection
-from momapper.decorated_collection import DecoratedCollection
+from momapper.mongodb.collection import MappedCollection
 
 
 def test_manager_register(mongo_client, monkeypatch):
@@ -14,7 +14,7 @@ def test_manager_register(mongo_client, monkeypatch):
         m.setattr(MongoManager, "_registry", {})
         MongoManager.register(_class, _database, _collection)
         registered = MongoManager._registry[_class]
-        assert isinstance(registered, DecoratedCollection)
+        assert isinstance(registered, MappedCollection)
         assert registered.name == _collection
         assert registered._impl is _class
         assert registered.database is _database

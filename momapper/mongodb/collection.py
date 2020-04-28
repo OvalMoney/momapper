@@ -1,16 +1,16 @@
 from pymongo.collection import Collection
 
-from momapper.decorated_cursor import DecoratedCursor
+from .cursor import MappedCursor
 
 
-class DecoratedCollection(Collection):
+class MappedCollection(Collection):
     """Decorated collection that generates decorated cursors.
 
-    Subclass of :py:class:`pymongo.collection.Collection` decorated so that
-    queries will return instances of a mapped class instead of plain dictionaries.
+    Subclass of :py:class:`pymongo.collection.Collection` that maps results
+    to instances of a mapped class instead of plain dictionaries.
 
     :param impl: the class to map the returned documents to.
-    :type impl: type[MappedClass]
+    :type impl: Type[MappedClass]
     """
 
     def __init__(self, *args, impl, **kwargs):
@@ -21,7 +21,7 @@ class DecoratedCollection(Collection):
         """Allows insert_one to be called with a MappedClass instance.
 
         Can be called both as the standard pymongo `insert_one` with a dictionary
-        as `document`, or with an instance of :py:attr`DecoratedCollection._impl`.
+        as `document`, or with an instance of :py:attr`MappedCollection._impl`.
         In case a dictionary is passed, validation will be performed on it, unless
         the parameter ``_skip_validation`` is passed to ``False``.
 
@@ -41,7 +41,7 @@ class DecoratedCollection(Collection):
     def find(self, *args, _skip_validation=False, **kwargs):
         """Overridden to return a decorated cursor.
 
-        Will return a :py:class:`DecoratedCursor` that automatically instantiates
+        Will return a :py:class:`MappedCursor` that automatically instantiates
         a mapped object from a returned document, when consumed.
 
         :param _skip_validation: when `True`, will return a standard cursor instead.
@@ -49,4 +49,4 @@ class DecoratedCollection(Collection):
         """
         if _skip_validation:
             return super().find(*args, **kwargs)
-        return DecoratedCursor(self, *args, **kwargs)
+        return MappedCursor(self, *args, **kwargs)

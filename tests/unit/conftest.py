@@ -4,11 +4,12 @@ from unittest.mock import MagicMock
 import pytest
 
 from momapper import MappedClass, Field
+from momapper.types import StringType, IntType
 
 
 class Example(MappedClass):
-    name = Field("name", str)
-    count = Field("count", int)
+    name = Field("name", StringType)
+    count = Field("count", IntType)
 
 
 @pytest.fixture
@@ -24,7 +25,7 @@ def mocked_example(monkeypatch):
 
 
 class Cop(MappedClass):
-    name = Field("the_name", str)
-    surname = Field("the_surname", str)
-    skill_level = Field("skill_level", int, required=True, if_missing=0)
+    name = Field("the_name", StringType)
+    surname = Field("the_surname", StringType)
+    skill_level = Field("skill_level", IntType, required=True, if_missing=0)
 

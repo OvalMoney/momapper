@@ -2,6 +2,7 @@ import pytest
 
 from momapper import Field
 from momapper.mappedclass import ValidatorMeta
+from momapper.types import StringType, IntType
 from tests.unit.conftest import Cop
 
 
@@ -14,16 +15,16 @@ def test_validator_meta_no_fields():
 
 def test_validator_meta_fields_no_name():
     class NoNameFields(metaclass=ValidatorMeta):
-        name = Field(None, str)
-        count = Field(None, int)
+        name = Field(None, StringType)
+        count = Field(None, IntType)
 
     assert NoNameFields.__fields__ == {"name": "name", "count": "count"}
 
 
 def test_validator_meta_fields_with_name():
     class NameFields(metaclass=ValidatorMeta):
-        name = Field("name_field", str)
-        count = Field("count_field", str)
+        name = Field("name_field", StringType)
+        count = Field("count_field", StringType)
 
     assert NameFields.__fields__ == {"name": "name_field", "count": "count_field"}
 
@@ -84,7 +85,7 @@ def test_mappedclass_validate(document, validated):
 
 
 def test_mappedclass_validate_invalid():
-    with pytest.raises(ValueError):
+    with pytest.raises(TypeError):
         Cop.validate(
             {"the_name": "Jake", "the_surname": "Peralta", "skill_level": "genius"}
         )

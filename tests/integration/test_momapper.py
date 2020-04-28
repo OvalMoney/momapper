@@ -10,11 +10,13 @@ from momapper import collection, MongoManager, MappedClass, Field
 
 from bson import ObjectId
 
+from momapper.types import StringType, IntType, ObjectIdType
+
 
 class Document(MappedClass):
-    uid = Field("_id", ObjectId, if_missing=ObjectId, required=True)
-    name = Field("name", str)
-    money = Field("amount_of_money", int)
+    uid = Field("_id", ObjectIdType, if_missing=ObjectId, required=True)
+    name = Field("name", StringType)
+    money = Field("amount_of_money", IntType)
 
     def __repr__(self):
         return f"<Document {self.__dict__}>"

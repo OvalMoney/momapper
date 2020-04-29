@@ -28,4 +28,3 @@ class Cop(MappedClass):
     name = Field("the_name", StringType)
     surname = Field("the_surname", StringType)
     skill_level = Field("skill_level", IntType, required=True, if_missing=0)
-

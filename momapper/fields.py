@@ -48,7 +48,7 @@ class Field:
         :return: the field validator.
         :rtype: BaseType
         """
-        return self.type_(value=value, allow_empty=not self.required)
+        return self.type_(name=self.field, value=value, allow_empty=not self.required)
 
     def validate(self, value):
         """Executes validation of the given value.

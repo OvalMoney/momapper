@@ -30,7 +30,7 @@ def test_validator():
     result = object()
     field = Field("fake", type_=MagicMock(return_value=result))
     assert field.validator("value") is result
-    field.type_.assert_called_with(value="value", allow_empty=True)
+    field.type_.assert_called_with(name="fake", value="value", allow_empty=True)
 
 
 def test_validate(mocked_field):

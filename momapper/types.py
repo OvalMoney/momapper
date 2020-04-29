@@ -9,7 +9,7 @@ __all__ = [
     "ListType",
     "DictType",
     "ValidationError",
-    "Missing"
+    "Missing",
 ]
 
 from decimal import Decimal
@@ -32,14 +32,17 @@ class Missing(ValidationError):
 class BaseType:
     """Implements validation for field values."""
 
-    def __init__(self, value, allow_empty=True):
+    def __init__(self, name, value, allow_empty=True):
         """
+        :param name: the name of the value to validate.
+        :type name: str
         :param value: the value to validate.
         :type value: object
         :param allow_empty: whether the value is allowed to be None or not.
         :type allow_empty: bool
         """
         super().__init__()
+        self.name = name
         self.value = value
         self.allow_empty = allow_empty
 
@@ -72,9 +75,12 @@ class JsonType(BaseType):
         if self.value is None and self.allow_empty:
             return self.value
         if self.value is None:
-            raise Missing
+            raise Missing(f"{self.name} is required")
         if not type(self.value) == self.typ:
-            raise ValidationError
+            raise ValidationError(
+                f"{self.name} should be {self.typ}. "
+                f"Found {self.value}."
+            )
         return self.value
 
     def marshal(self):

@@ -6,8 +6,10 @@ Python Mapper for MongoDB models
 
 
 .. image:: https://img.shields.io/pypi/v/momapper.svg
-        :target: https://pypi.python.org/pypi/momapper
+    :target: https://pypi.python.org/pypi/momapper
 
+.. image:: https://img.shields.io/travis/OvalMoney/momapper.svg
+    :target: https://travis-ci.org/OvalMoney/momapper
 
 Features
 --------

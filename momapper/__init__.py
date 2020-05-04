@@ -4,7 +4,7 @@
 
 __author__ = """Walter Danilo Galante"""
 __email__ = "walter.galante@ovalmoney.com"
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 
 
 from .fields import Field

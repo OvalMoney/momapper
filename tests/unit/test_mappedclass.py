@@ -1,7 +1,7 @@
 import pytest
 
 from momapper import Field
-from momapper.mappedclass import ValidatorMeta
+from momapper.mappedclass import ValidatorMeta, MappedClass
 from momapper.types import StringType, IntType, ValidationError
 from tests.unit.conftest import Cop
 
@@ -89,3 +89,18 @@ def test_mappedclass_validate_invalid():
         Cop.validate(
             {"the_name": "Jake", "the_surname": "Peralta", "skill_level": "genius"}
         )
+
+
+def test_mappedclass_multiple_inheritance():
+    class Implementation:
+        def __init__(self):
+            self._impl = self._document
+
+    class Doc(MappedClass, Implementation):
+        name = Field("name", StringType)
+
+    assert MappedClass in Doc.__mro__
+    assert Implementation in Doc.__mro__
+
+    doc = Doc(name="test")
+    assert doc._impl is doc._document

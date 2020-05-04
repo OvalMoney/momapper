@@ -50,6 +50,7 @@ class MappedClass(metaclass=ValidatorMeta):
         if not _document:
             _document = self.make_document(**kwargs)
         self._document = self.validate(_document)
+        super().__init__()
 
     @classmethod
     def make_document(cls, **kwargs):
